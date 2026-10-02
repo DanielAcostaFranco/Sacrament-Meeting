@@ -1,0 +1,109 @@
+<%- include("layout", { body: `
+  <section class="card">
+    <div class="row space">
+      <h2>New Program</h2>
+      <a class="btn" href="/programs">History</a>
+    </div>
+
+    <form class="form" method="POST" action="/programs" id="programForm">
+      <div class="grid2">
+        <label>
+          Meeting Date *
+          <input name="meeting_date" type="date" value="${defaultDate}" required />
+        </label>
+
+        <label>
+          Unit Name (optional)
+          <input name="unit_name" type="text" placeholder="Rexburg 1st Ward" />
+        </label>
+
+        <label>
+          Presiding
+          <input name="presiding" type="text" placeholder="Bishop ..." />
+        </label>
+
+        <label>
+          Conducting
+          <input name="conducting" type="text" placeholder="Brother/Sister ..." />
+        </label>
+
+        <label>
+          Opening Hymn
+          <input name="opening_hymn" type="text" placeholder="Hymn # / Title" />
+        </label>
+
+        <label>
+          Opening Prayer
+          <input name="opening_prayer" type="text" placeholder="Name" />
+        </label>
+
+        <label>
+          Sacrament Hymn
+          <input name="sacrament_hymn" type="text" placeholder="Hymn # / Title" />
+        </label>
+
+        <label>
+          Intermediate Hymn (optional)
+          <input name="intermediate_hymn" type="text" placeholder="Hymn # / Title" />
+        </label>
+
+        <label>
+          Closing Hymn
+          <input name="closing_hymn" type="text" placeholder="Hymn # / Title" />
+        </label>
+
+        <label>
+          Closing Prayer
+          <input name="closing_prayer" type="text" placeholder="Name" />
+        </label>
+      </div>
+
+      <div class="block">
+        <label>
+          Announcements
+          <textarea name="announcements" rows="4" placeholder="Announcements..."></textarea>
+        </label>
+      </div>
+
+      <div class="block grid2">
+        <label>
+          Sostenimientos
+          <textarea name="sustainings" rows="4" placeholder="Ej: Juan Pérez — llamado como..."></textarea>
+        </label>
+
+        <label>
+          Relevos
+          <textarea name="releases" rows="4" placeholder="Ej: María López — relevada como..."></textarea>
+        </label>
+      </div>
+
+      <div class="block">
+        <div class="row space">
+          <h3>Speakers</h3>
+          <button class="btn small" type="button" id="addSpeakerBtn">+ Add Speaker</button>
+        </div>
+
+        <div id="speakersWrap" class="speakers">
+          <div class="speaker-row">
+            <input name="speakers_name" type="text" placeholder="Speaker name" />
+            <input name="speakers_topic" type="text" placeholder="Topic (optional)" />
+            <button class="btn danger small" type="button" disabled title="At least one row">Remove</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="block">
+        <label>
+          Notes (internal)
+          <textarea name="notes" rows="3" placeholder="Anything extra..."></textarea>
+        </label>
+      </div>
+
+      <div class="row end">
+        <button class="btn primary" type="submit">Save Program</button>
+      </div>
+    </form>
+  </section>
+
+  <script src="/js/form.js"></script>
+` }) %>

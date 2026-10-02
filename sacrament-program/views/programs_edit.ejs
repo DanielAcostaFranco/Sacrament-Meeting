@@ -1,0 +1,125 @@
+<% const sp = (speakers && speakers.length) ? speakers : [{ name: "", topic: "" }]; %>
+
+<%- include("layout", { body: `
+  <section class="card">
+    <div class="row space">
+      <h2>Edit Program</h2>
+      <div class="row gap">
+        <a class="btn" href="/programs/${program.id}">View</a>
+        <a class="btn" href="/programs">History</a>
+      </div>
+    </div>
+
+    <form class="form" method="POST" action="/programs/${program.id}" id="programForm">
+      <div class="grid2">
+        <label>
+          Meeting Date *
+          <input name="meeting_date" type="date" value="${program.meeting_date}" required />
+        </label>
+
+        <label>
+          Unit Name
+          <input name="unit_name" type="text" value="${program.unit_name || ""}" />
+        </label>
+
+        <label>
+          Presiding
+          <input name="presiding" type="text" value="${program.presiding || ""}" />
+        </label>
+
+        <label>
+          Conducting
+          <input name="conducting" type="text" value="${program.conducting || ""}" />
+        </label>
+
+        <label>
+          Opening Hymn
+          <input name="opening_hymn" type="text" value="${program.opening_hymn || ""}" />
+        </label>
+
+        <label>
+          Opening Prayer
+          <input name="opening_prayer" type="text" value="${program.opening_prayer || ""}" />
+        </label>
+
+        <label>
+          Sacrament Hymn
+          <input name="sacrament_hymn" type="text" value="${program.sacrament_hymn || ""}" />
+        </label>
+
+        <label>
+          Intermediate Hymn
+          <input name="intermediate_hymn" type="text" value="${program.intermediate_hymn || ""}" />
+        </label>
+
+        <label>
+          Closing Hymn
+          <input name="closing_hymn" type="text" value="${program.closing_hymn || ""}" />
+        </label>
+
+        <label>
+          Closing Prayer
+          <input name="closing_prayer" type="text" value="${program.closing_prayer || ""}" />
+        </label>
+      </div>
+
+      <div class="block">
+        <label>
+          Announcements
+          <textarea name="announcements" rows="4">${program.announcements || ""}</textarea>
+        </label>
+      </div>
+
+      <div class="block grid2">
+        <label>
+          Sostenimientos
+          <textarea name="sustainings" rows="4">${program.sustainings || ""}</textarea>
+        </label>
+
+        <label>
+          Relevos
+          <textarea name="releases" rows="4">${program.releases || ""}</textarea>
+        </label>
+      </div>
+
+      <div class="block">
+        <div class="row space">
+          <h3>Speakers</h3>
+          <button class="btn small" type="button" id="addSpeakerBtn">+ Add Speaker</button>
+        </div>
+
+        <div id="speakersWrap" class="speakers">
+          ${sp.map((s, idx) => `
+            <div class="speaker-row">
+              <input name="speakers_name" type="text" value="${(s.name || "").replaceAll('"', "&quot;")}" placeholder="Speaker name" />
+              <input name="speakers_topic" type="text" value="${(s.topic || "").replaceAll('"', "&quot;")}" placeholder="Topic (optional)" />
+              <button class="btn danger small" type="button" ${idx === 0 && sp.length === 1 ? "disabled" : ""}>Remove</button>
+            </div>
+          `).join("")}
+        </div>
+      </div>
+
+      <div class="block">
+        <label>
+          Notes (internal)
+          <textarea name="notes" rows="3">${program.notes || ""}</textarea>
+        </label>
+      </div>
+
+      <div class="row space">
+        <form method="POST" action="/programs/${program.id}/delete" onsubmit="return confirm('Delete this program?');">
+          <button class="btn danger" type="submit">Delete</button>
+        </form>
+
+        <div class="row gap">
+          <form method="POST" action="/programs/${program.id}/duplicate">
+            <button class="btn" type="submit">Duplicate</button>
+          </form>
+          <button class="btn primary" type="submit">Save Changes</button>
+        </div>
+      </div>
+    </form>
+  </section>
+
+  <script src="/js/form.js"></script>
+` }) %>

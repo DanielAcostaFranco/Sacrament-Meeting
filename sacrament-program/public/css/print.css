@@ -1,0 +1,19 @@
+/* Print-friendly */
+@media print {
+  body{
+    background: white !important;
+    color: #111 !important;
+  }
+  .no-print, .no-print * { display:none !important; }
+  .card{
+    box-shadow: none !important;
+    border: none !important;
+    background: white !important;
+    padding: 0 !important;
+  }
+  .program-section{
+    border: 1px solid #ddd !important;
+    background: white !important;
+  }
+  input, textarea { border: 1px solid #ddd !important; }
+}

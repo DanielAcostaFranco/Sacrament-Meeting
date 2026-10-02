@@ -1,0 +1,32 @@
+<%- include("layout", { body: `
+  <section class="card">
+    <div class="row space">
+      <h2>Program History</h2>
+      <a class="btn primary" href="/programs/new">New</a>
+    </div>
+
+    ${programs.length === 0 ? `
+      <p class="muted">No programs yet.</p>
+    ` : `
+      <div class="list">
+        ${programs.map(p => `
+          <div class="list-item">
+            <div>
+              <div class="title">${p.meeting_date}</div>
+              <div class="muted small">
+                ${p.unit_name ? `${p.unit_name} · ` : ""}Conducting: ${p.conducting || "-"} · Presiding: ${p.presiding || "-"}
+              </div>
+            </div>
+            <div class="list-actions">
+              <a class="btn small" href="/programs/${p.id}">View</a>
+              <a class="btn small" href="/programs/${p.id}/edit">Edit</a>
+              <form method="POST" action="/programs/${p.id}/delete" onsubmit="return confirm('Delete this program?');">
+                <button class="btn danger small" type="submit">Delete</button>
+              </form>
+            </div>
+          </div>
+        `).join("")}
+      </div>
+    `}
+  </section>
+` }) %>

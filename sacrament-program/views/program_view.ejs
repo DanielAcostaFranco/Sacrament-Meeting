@@ -1,0 +1,79 @@
+<% const pm = (typeof printMode !== "undefined" && printMode); %>
+
+<%- include("layout", { printMode: pm, body: `
+  <section class="card program">
+    <div class="row space no-print">
+      <div>
+        <h2>Program</h2>
+        <p class="muted">Date: ${program.meeting_date}</p>
+      </div>
+
+      <div class="row gap">
+        <a class="btn" href="/programs/${program.id}/edit">Edit</a>
+        <a class="btn" href="/programs/${program.id}/print" target="_blank">Print View</a>
+        <button class="btn primary" onclick="window.print()">Print</button>
+      </div>
+    </div>
+
+    <div class="program-sheet">
+      <div class="program-header">
+        <div class="big-title">${program.unit_name || "Sacrament Meeting"}</div>
+        <div class="subtitle">${program.meeting_date}</div>
+      </div>
+
+      <div class="program-grid">
+        <div class="program-section">
+          <h3>Leadership</h3>
+          <div class="line"><span>Presiding:</span> <strong>${program.presiding || "-"}</strong></div>
+          <div class="line"><span>Conducting:</span> <strong>${program.conducting || "-"}</strong></div>
+        </div>
+
+        <div class="program-section">
+          <h3>Music & Prayers</h3>
+          <div class="line"><span>Opening Hymn:</span> <strong>${program.opening_hymn || "-"}</strong></div>
+          <div class="line"><span>Opening Prayer:</span> <strong>${program.opening_prayer || "-"}</strong></div>
+          <div class="line"><span>Sacrament Hymn:</span> <strong>${program.sacrament_hymn || "-"}</strong></div>
+          ${program.intermediate_hymn ? `<div class="line"><span>Intermediate Hymn:</span> <strong>${program.intermediate_hymn}</strong></div>` : ""}
+          <div class="line"><span>Closing Hymn:</span> <strong>${program.closing_hymn || "-"}</strong></div>
+          <div class="line"><span>Closing Prayer:</span> <strong>${program.closing_prayer || "-"}</strong></div>
+        </div>
+
+        <div class="program-section">
+          <h3>Sostenimientos</h3>
+          <p class="prewrap">${program.sustainings || "-"}</p>
+        </div>
+
+        <div class="program-section">
+          <h3>Relevos</h3>
+          <p class="prewrap">${program.releases || "-"}</p>
+        </div>
+
+        <div class="program-section">
+          <h3>Speakers</h3>
+          ${speakers.length === 0 ? `<p class="muted">No speakers listed.</p>` : `
+            <ul class="speaker-list">
+              ${speakers.map(s => `
+                <li>
+                  <strong>${s.name || "-"}</strong>
+                  ${s.topic ? `<span class="muted"> — ${s.topic}</span>` : ""}
+                </li>
+              `).join("")}
+            </ul>
+          `}
+        </div>
+
+        <div class="program-section">
+          <h3>Announcements</h3>
+          <p class="prewrap">${program.announcements || "-"}</p>
+        </div>
+
+        ${program.notes ? `
+          <div class="program-section no-print">
+            <h3>Notes (internal)</h3>
+            <p class="prewrap">${program.notes}</p>
+          </div>
+        ` : ""}
+      </div>
+    </div>
+  </section>
+` }) %>
