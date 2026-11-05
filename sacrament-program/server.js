@@ -10,20 +10,24 @@ app.set("view engine", "ejs");
 app.set("views", path.join(process.cwd(), "views"));
 
 // Middlewares
-app.use(express.urlencoded({ extended: true })); // for form submissions
-app.use(express.json()); // for JSON (optional)
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(express.static(path.join(process.cwd(), "public")));
 
 // Routes
 app.get("/", (req, res) => res.render("home"));
 app.use("/programs", programsRouter);
 
-// Basic error handler (nice for debugging)
+// Basic error handler
 app.use((err, req, res, next) => {
   console.error(err);
   res.status(err.status || 500).send("Something went wrong.");
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+export default app;
+
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+  });
+}
