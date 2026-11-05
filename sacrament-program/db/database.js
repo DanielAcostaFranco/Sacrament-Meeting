@@ -33,8 +33,8 @@ function createMemoryDatabase() {
       if (sql.includes("UPDATE programs SET")) {
         return {
           run(data) {
-            const row = rows.find((item) => item.id === Number(data.id));
-            if (row) Object.assign(row, data, { updated_at: new Date().toISOString() });
+            const row = rows.find((item) => item.id === Number(data.id ?? data));
+            if (row) Object.assign(row, typeof data === "object" ? data : {}, { updated_at: new Date().toISOString() });
             return { changes: row ? 1 : 0 };
           }
         };
@@ -100,7 +100,11 @@ if (process.env.VERCEL) {
 }
 
 export function touchProgram(id) {
-  db.prepare(`UPDATE programs SET updated_at = datetime('now') WHERE id = ?`).run({ id });
+  if (process.env.VERCEL) {
+    db.prepare(`UPDATE programs SET updated_at = datetime('now') WHERE id = ?`).run({ id });
+  } else {
+    db.prepare(`UPDATE programs SET updated_at = datetime('now') WHERE id = ?`).run(id);
+  }
 }
 
 export default db;
